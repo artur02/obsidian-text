@@ -16,41 +16,20 @@ export default class MyPlugin extends Plugin {
 
 		await this.loadSettings();
 
-		this.addRibbonIcon('dice', 'Sample Plugin', () => {
-			new Notice('This is a notice!');
-		});
-
-		this.addStatusBarItem().setText('Status Bar Text');
-
 		this.addCommand({
-			id: 'open-sample-modal',
-			name: 'Open Sample Modal',
-			// callback: () => {
-			// 	console.log('Simple Callback');
-			// },
+			id: 'lowercase',
+			name: 'To Lowercase',
 			checkCallback: (checking: boolean) => {
-				let leaf = this.app.workspace.activeLeaf;
-				if (leaf) {
-					if (!checking) {
-						new SampleModal(this.app).open();
-					}
-					return true;
+				let editor = this.getEditor();
+				if(!checking) {
+					editor.replaceSelection(this.getSelectedText(editor).toLowerCase());
 				}
-				return false;
+				console.log('TO LOWERCASE');
+				return true;
 			}
 		});
 
-		this.addSettingTab(new SampleSettingTab(this.app, this));
-
-		this.registerCodeMirror((cm: CodeMirror.Editor) => {
-			console.log('codemirror', cm);
-		});
-
-		this.registerDomEvent(document, 'click', (evt: MouseEvent) => {
-			console.log('click', evt);
-		});
-
-		this.registerInterval(window.setInterval(() => console.log('setInterval'), 5 * 60 * 1000));
+		//this.addSettingTab(new SampleSettingTab(this.app, this));
 	}
 
 	onunload() {
@@ -64,21 +43,17 @@ export default class MyPlugin extends Plugin {
 	async saveSettings() {
 		await this.saveData(this.settings);
 	}
-}
 
-class SampleModal extends Modal {
-	constructor(app: App) {
-		super(app);
-	}
+	
+	
+	
+	private getEditor(): CodeMirror.Editor {
+		let activeLeaf: any = this.app.workspace.activeLeaf;
+		return activeLeaf.view.sourceMode.cmEditor;
+	  }
 
-	onOpen() {
-		let {contentEl} = this;
-		contentEl.setText('Woah!');
-	}
-
-	onClose() {
-		let {contentEl} = this;
-		contentEl.empty();
+	private getSelectedText(editor : CodeMirror.Editor) : string {
+		return editor.getSelection();
 	}
 }
 
