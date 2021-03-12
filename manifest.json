@@ -1,6 +1,6 @@
 {
-	"id": "obsidian-text-plugin",
-	"name": "Sample Text Transformation Plugin",
+	"id": "text-transformation-plugin",
+	"name": "Text Transformation",
 	"version": "0.0.1",
 	"minAppVersion": "0.9.12",
 	"description": "This is a sample plugin for Obsidian. It itroduces some text transfromation operations.",
