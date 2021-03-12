@@ -5,7 +5,7 @@ export default class MyPlugin extends Plugin {
 
 
 	async onload() {
-		console.log('loading plugin');
+		console.log('loading plugin: text-transformation-plugin');
 
 		this.addCommand({
 			id: 'to-lowercase',
