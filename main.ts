@@ -1,6 +1,8 @@
 import { Plugin } from 'obsidian';
+import voca from 'voca';
 
 export default class MyPlugin extends Plugin {
+
 
 	async onload() {
 		console.log('loading plugin');
@@ -19,8 +21,14 @@ export default class MyPlugin extends Plugin {
 
 		this.addCommand({
 			id: 'to-titlecase',
-			name: 'To Titlecase',
+			name: 'To Title case',
 			checkCallback: this.toTitleCase.bind(this)
+		});
+
+		this.addCommand({
+			id: 'to-startcase',
+			name: 'To Start case',
+			checkCallback: this.toStartCase.bind(this)
 		});
 
 		//this.addSettingTab(new SampleSettingTab(this.app, this));
@@ -30,7 +38,7 @@ export default class MyPlugin extends Plugin {
 		let editor = this.getEditor();
 		if (!checking) {
 			let text = this.getSelectedText(editor);
-			editor.replaceSelection(text.toLowerCase());
+			editor.replaceSelection(voca.loweCase(text));
 		}
 		console.log('TO LOWERCASE');
 		return true;
@@ -40,7 +48,7 @@ export default class MyPlugin extends Plugin {
 		let editor = this.getEditor();
 		if (!checking) {
 			let text = this.getSelectedText(editor);
-			editor.replaceSelection(text.toUpperCase());
+			editor.replaceSelection(voca.upperCase(text));
 		}
 		console.log('TO UPPERCASE');
 		return true;
@@ -51,14 +59,22 @@ export default class MyPlugin extends Plugin {
 		let text = this.getSelectedText(editor);
 
 		if (!checking) {
-		let lowercase = text.toLowerCase();
-		let titleCase = lowercase.substring(0, 1).toUpperCase() + lowercase.substring(1);
-
-		editor.replaceSelection(titleCase);
+			editor.replaceSelection(voca.titleCase(text, ['-']));
 		}
 
 		return true;
-	}	
+	}
+
+	private toStartCase(checking: boolean) {
+		let editor = this.getEditor();
+		let text = this.getSelectedText(editor);
+
+		if (!checking) {
+			editor.replaceSelection(voca.capitalize(text, true));	
+		}
+
+		return true;
+	}
 	
 	private getEditor(): CodeMirror.Editor {
 		let activeLeaf: any = this.app.workspace.activeLeaf;
