@@ -1,8 +1,9 @@
 import { Plugin } from 'obsidian';
-let voca = require('voca');
+//let voca = require('voca');
+import Case from 'src/transform'
 
 export default class MyPlugin extends Plugin {
-
+	case = new Case();
 
 	async onload() {
 		console.log('loading plugin: text-transformation-plugin');
@@ -35,42 +36,52 @@ export default class MyPlugin extends Plugin {
 	}
 
 	private toLowecase(checking: boolean) {
-		let editor = this.getEditor();
 		if (!checking) {
+			let editor = this.getEditor();
+
 			let text = this.getSelectedText(editor);
-			editor.replaceSelection(voca.lowerCase(text));
+			let ntext = this.case.lowerCase(text);
+			
+			editor.replaceSelection(ntext);
 		}
 		console.log('TO LOWERCASE');
 		return true;
 	}
 
 	private toUppercase(checking: boolean) {
-		let editor = this.getEditor();
 		if (!checking) {
+			let editor = this.getEditor();
+
 			let text = this.getSelectedText(editor);
-			editor.replaceSelection(voca.upperCase(text));
+			let ntext = this.case.upperCase(text);
+			
+			editor.replaceSelection(ntext);
 		}
 		console.log('TO UPPERCASE');
 		return true;
 	}
 
 	private toTitleCase(checking: boolean){
-		let editor = this.getEditor();
-		let text = this.getSelectedText(editor);
-
 		if (!checking) {
-			editor.replaceSelection(voca.titleCase(text, ['-']));
+			let editor = this.getEditor();
+			
+			let text = this.getSelectedText(editor);			
+			let ntext = this.case.titleCase(text);
+			
+			editor.replaceSelection(ntext);
 		}
 
 		return true;
 	}
 
 	private toStartCase(checking: boolean) {
-		let editor = this.getEditor();
-		let text = this.getSelectedText(editor);
-
 		if (!checking) {
-			editor.replaceSelection(voca.capitalize(text, true));	
+			let editor = this.getEditor();
+			
+			let text = this.getSelectedText(editor);
+			let ntext = this.case.capitalize(text);
+			
+			editor.replaceSelection(ntext);	
 		}
 
 		return true;
