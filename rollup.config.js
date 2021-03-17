@@ -15,7 +15,6 @@ export default {
     dir: '.',
     sourcemap: 'inline',
     format: 'cjs',
-    exports: 'default',
     banner,
   },
   external: ['obsidian'],

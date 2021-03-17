@@ -1,5 +1,5 @@
 import { Plugin } from 'obsidian';
-import voca from 'voca';
+let voca = require('voca');
 
 export default class MyPlugin extends Plugin {
 
@@ -38,7 +38,7 @@ export default class MyPlugin extends Plugin {
 		let editor = this.getEditor();
 		if (!checking) {
 			let text = this.getSelectedText(editor);
-			editor.replaceSelection(voca.loweCase(text));
+			editor.replaceSelection(voca.lowerCase(text));
 		}
 		console.log('TO LOWERCASE');
 		return true;
