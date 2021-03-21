@@ -1,4 +1,5 @@
-let voca = require('voca');
+import * as voca from 'voca';
+
 
 export default class Case {
     constructor() {

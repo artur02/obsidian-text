@@ -1,6 +1,5 @@
 import { Plugin } from 'obsidian';
-//let voca = require('voca');
-import Case from 'src/transform'
+import Case from 'src/transform';
 
 export default class MyPlugin extends Plugin {
 	case = new Case();

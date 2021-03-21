@@ -1,5 +1,7 @@
-import { expect } from 'chai';
-import Case from '../src/transform'
+require('typescript-require');
+
+let Case = require('../src/transform.ts').default;
+let expect = require('chai').expect;
 
 describe("Case", () => {
     describe("upperCase", () => {
