@@ -1,11 +1,13 @@
 import { Plugin } from 'obsidian';
 import Case from 'src/transform';
+import Editor from 'src/editor';
 
 export default class MyPlugin extends Plugin {
 	case = new Case();
+	editor = new Editor(this.app);
 
 	async onload() {
-		console.log('loading plugin: text-transformation-plugin');
+		console.log('loading plugin: text-transformation');
 
 		this.addCommand({
 			id: 'to-lowercase',
@@ -35,63 +37,18 @@ export default class MyPlugin extends Plugin {
 	}
 
 	private toLowecase(checking: boolean) {
-		if (!checking) {
-			let editor = this.getEditor();
-
-			let text = this.getSelectedText(editor);
-			let ntext = this.case.lowerCase(text);
-			
-			editor.replaceSelection(ntext);
-		}
-		console.log('TO LOWERCASE');
-		return true;
+		return this.editor.replaceSelectedText(checking, this.case.lowerCase);
 	}
 
 	private toUppercase(checking: boolean) {
-		if (!checking) {
-			let editor = this.getEditor();
-
-			let text = this.getSelectedText(editor);
-			let ntext = this.case.upperCase(text);
-			
-			editor.replaceSelection(ntext);
-		}
-		console.log('TO UPPERCASE');
-		return true;
+		return this.editor.replaceSelectedText(checking, this.case.upperCase);
 	}
 
 	private toTitleCase(checking: boolean){
-		if (!checking) {
-			let editor = this.getEditor();
-			
-			let text = this.getSelectedText(editor);			
-			let ntext = this.case.titleCase(text);
-			
-			editor.replaceSelection(ntext);
-		}
-
-		return true;
+		return this.editor.replaceSelectedText(checking, this.case.titleCase);
 	}
 
 	private toStartCase(checking: boolean) {
-		if (!checking) {
-			let editor = this.getEditor();
-			
-			let text = this.getSelectedText(editor);
-			let ntext = this.case.capitalize(text);
-			
-			editor.replaceSelection(ntext);	
-		}
-
-		return true;
-	}
-	
-	private getEditor(): CodeMirror.Editor {
-		let activeLeaf: any = this.app.workspace.activeLeaf;
-		return activeLeaf.view.sourceMode.cmEditor;
-	  }
-
-	private getSelectedText(editor : CodeMirror.Editor) : string {
-		return editor.getSelection();
+		return this.editor.replaceSelectedText(checking, this.case.capitalize);
 	}
 }

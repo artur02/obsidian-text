@@ -31,6 +31,8 @@ export default class Editor {
             let ntext = transformation(text);
 
             editor.replaceSelection(ntext);
+
+            console.log("text transformation: " + transformation.name)
         }
 
         return true;
