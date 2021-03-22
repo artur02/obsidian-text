@@ -1,7 +1,7 @@
 {
 	"id": "text-transformation-plugin",
 	"name": "Text Transformation",
-	"version": "0.0.1",
+	"version": "0.0.2",
 	"minAppVersion": "0.9.12",
 	"description": "This is a simple text transfromation plugin that supports UPPERCASE, lowercase, Title Case, Sentence case.",
 	"author": "Artur Herczeg",
